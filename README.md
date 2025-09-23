@@ -1,5 +1,7 @@
 # Notes on the Module "Examples"
 
+## What Does It Do?
+
 Guess what: This module contains example pograms (no, really?!).
 
 ## What the Programs are
@@ -57,3 +59,17 @@ Thus, the suggested workflow is:
 3. Compile.
 4. Do a test run and see whether it actually does what you expect.
 5. Adapt the code to your needs / integrate it into your project.
+
+## More Example Files
+https://www.gnucash.org/docs/examples/
+
+## What is This Repo's Relationship with the Other Repos?
+
+* This is a module-level repository which is part of a multi-module project, i.e. it has a parent and several siblings. 
+
+  [Parent](https://github.com/jross765/JKMyMoneyLibNTools.git)
+
+* Under normal circumstances, you cannot compile it on its own (at least not without further preparation), but instead, you should clone it together with the other repos and use the parent repo's build-script.
+
+* This repository contains no history before V. 1.7 (cf. notes in parent repo).
+
