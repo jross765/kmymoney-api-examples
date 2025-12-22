@@ -1,4 +1,4 @@
-package org.example.kmymoneyapi.write.gen.complex;
+package org.example.kmymoneyapiext.write.gen;
 
 import java.io.File;
 import java.time.LocalDate;

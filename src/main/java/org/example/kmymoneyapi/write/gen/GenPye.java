@@ -1,26 +1,23 @@
-package org.example.kmymoneyapi.write.gen.simple;
+package org.example.kmymoneyapi.write.gen;
 
 import java.io.File;
 
-import org.kmymoney.api.read.KMMSecCurr;
-import org.kmymoney.api.write.KMyMoneyWritableSecurity;
+import org.kmymoney.api.write.KMyMoneyWritablePayee;
 import org.kmymoney.api.write.impl.KMyMoneyWritableFileImpl;
 
-public class GenSec {
+public class GenPye {
     // BEGIN Example data -- adapt to your needs
     private static String kmmInFileName  = "example_in.xml";
     private static String kmmOutFileName = "example_out.xml";
-
-    private static String name   = "HyperCyberScam Corp.";
-    private static String symbol = "SCAM";
-    private static String isin   = "US0123456789";
+    
+    private static String name = "Mama & Papa";
     // END Example data
 
     // -----------------------------------------------------------------
 
     public static void main(String[] args) {
 	try {
-	    GenSec tool = new GenSec();
+	    GenPye tool = new GenPye();
 	    tool.kernel();
 	} catch (Exception exc) {
 	    System.err.println("Execution exception. Aborting.");
@@ -32,15 +29,11 @@ public class GenSec {
     protected void kernel() throws Exception {
 	KMyMoneyWritableFileImpl kmmFile = new KMyMoneyWritableFileImpl(new File(kmmInFileName));
 
-	KMyMoneyWritableSecurity sec = kmmFile.createWritableSecurity(KMMSecCurr.Type.STOCK, isin, name);
-	sec.setSymbol(symbol);
+	KMyMoneyWritablePayee pye = kmmFile.createWritablePayee(name);
 
-	if (symbol != null)
-	    sec.setSymbol(symbol);
-
-	System.out.println("Security to write: " + sec.toString());
+	System.out.println("Payee to write: " + pye.toString());
 	kmmFile.writeFile(new File(kmmOutFileName));
 	System.out.println("OK");
     }
-
+ 
 }
