@@ -12,7 +12,7 @@ import xyz.schnorxoborx.base.beanbase.TooManyEntriesFoundException;
 
 public class GetPyeInfo {
     // BEGIN Example data -- adapt to your needs
-    private static String kmmFileName = "example_in.xml";
+    private static String kmmFileName = "example_in.kmy";
     private static Helper.Mode mode   = Helper.Mode.ID;
     private static KMMPyeID pyeID     = new KMMPyeID("xyz");
     private static String pyeName     = "abc";

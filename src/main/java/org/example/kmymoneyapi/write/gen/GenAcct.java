@@ -13,8 +13,8 @@ import org.kmymoney.base.basetypes.simple.KMMSecID;
 public class GenAcct
 {
     // BEGIN Example data -- adapt to your needs
-    private static String gcshInFileName  = "example_in.xml";
-    private static String gcshOutFileName = "example_out.xml";
+    private static String gcshInFileName  = "example_in.kmy";
+    private static String gcshOutFileName = "example_out.kmy";
     
     private static String                name1         = "FlixIt";
     private static KMyMoneyAccount.Type  type1         = KMyMoneyAccount.Type.EXPENSE;

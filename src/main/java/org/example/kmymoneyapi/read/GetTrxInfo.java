@@ -9,7 +9,7 @@ import org.kmymoney.base.basetypes.simple.KMMTrxID;
 
 public class GetTrxInfo {
     // BEGIN Example data -- adapt to your needs
-    private static String kmmFileName = "example_in.xml";
+    private static String kmmFileName = "example_in.kmy";
     private static KMMTrxID trxID     = new KMMTrxID("xyz");
     // END Example data
 

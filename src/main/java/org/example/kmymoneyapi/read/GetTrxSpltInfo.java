@@ -10,7 +10,7 @@ import org.kmymoney.base.basetypes.simple.KMMTrxID;
 
 public class GetTrxSpltInfo {
     // BEGIN Example data -- adapt to your needs
-    private static String kmmFileName = "example_in.xml";
+    private static String kmmFileName = "example_in.kmy";
     private static KMMTrxID  trxID    = new KMMTrxID("xyz");
     private static KMMSpltID spltID   = new KMMSpltID("S0001"); 
     // END Example data

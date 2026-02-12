@@ -11,7 +11,7 @@ import xyz.schnorxoborx.base.beanbase.NoEntryFoundException;
 
 public class GetCurrInfo {
     // BEGIN Example data -- adapt to your needs
-    private static String kmmFileName = "example_in.xml";
+    private static String kmmFileName = "example_in.kmy";
     private static String symbol      = "abc";
     // END Example data
 

@@ -15,8 +15,8 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 public class GenTrx {
     // BEGIN Example data -- adapt to your needs
-    private static String kmmInFileName  = "example_in.xml";
-    private static String kmmOutFileName = "example_out.xml";
+    private static String kmmInFileName  = "example_in.kmy";
+    private static String kmmOutFileName = "example_out.kmy";
     
     // ---
     

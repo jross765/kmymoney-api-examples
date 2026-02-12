@@ -23,8 +23,8 @@ public class GenDepotTrx {
 	// accounts. Thus, this is a precautionary measure.
 
 	// BEGIN Example data -- adapt to your needs
-    private static String kmmInFileName  = "example_in.xml";
-    private static String kmmOutFileName = "example_out.xml";
+    private static String kmmInFileName  = "example_in.kmy";
+    private static String kmmOutFileName = "example_out.kmy";
 
 	private static SecuritiesAccountTransactionManager.Type type = Type.DIVIDEND;
 

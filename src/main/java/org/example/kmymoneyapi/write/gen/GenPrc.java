@@ -16,8 +16,8 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 public class GenPrc {
     // BEGIN Example data -- adapt to your needs
-    private static String kmmInFileName  = "example_in.xml";
-    private static String kmmOutFileName = "example_out.xml";
+    private static String kmmInFileName  = "example_in.kmy";
+    private static String kmmOutFileName = "example_out.kmy";
 
     private static KMMQualifSecID       fromSecCurr1ID = new KMMQualifSecID("E000001");
     private static KMMQualifCurrID      toCurr1ID      = new KMMQualifCurrID("EUR");

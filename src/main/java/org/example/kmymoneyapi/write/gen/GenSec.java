@@ -8,8 +8,8 @@ import org.kmymoney.api.write.impl.KMyMoneyWritableFileImpl;
 
 public class GenSec {
     // BEGIN Example data -- adapt to your needs
-    private static String kmmInFileName  = "example_in.xml";
-    private static String kmmOutFileName = "example_out.xml";
+    private static String kmmInFileName  = "example_in.kmy";
+    private static String kmmOutFileName = "example_out.kmy";
 
     private static String name   = "HyperCyberScam Corp.";
     private static String symbol = "SCAM";

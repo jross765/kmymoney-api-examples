@@ -12,7 +12,7 @@ import xyz.schnorxoborx.base.beanbase.NoEntryFoundException;
 
 public class GetAcctInfo {
     // BEGIN Example data -- adapt to your needs
-    private static String kmmFileName    = "example_in.xml";
+    private static String kmmFileName    = "example_in.kmy";
     private static Helper.Mode mode      = Helper.Mode.ID;
     private static KMMComplAcctID acctID = new KMMComplAcctID("xyz");
     private static String acctName       = "abc";
