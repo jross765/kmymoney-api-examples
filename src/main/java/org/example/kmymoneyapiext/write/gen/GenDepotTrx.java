@@ -12,7 +12,7 @@ import org.kmymoney.api.write.impl.KMyMoneyWritableFileImpl;
 import org.kmymoney.apiext.secacct.SecuritiesAccountTransactionManager;
 import org.kmymoney.apiext.secacct.SecuritiesAccountTransactionManager.Type;
 import org.kmymoney.base.basetypes.simple.KMMAcctID;
-import org.kmymoney.base.tuples.AcctIDAmountPair;
+import org.kmymoney.base.tuples.AcctIDAmountFPPair;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
@@ -30,7 +30,7 @@ public class GenDepotTrx {
 
 	private static KMMAcctID stockAcctID  = new KMMAcctID( "A000063" );
 	private static KMMAcctID incomeAcctID = new KMMAcctID( "A000070" ); // only for dividend, not for buy/sell
-	private static List<AcctIDAmountPair> expensesAcctAmtList = new ArrayList<AcctIDAmountPair>(); // only for dividend, not for buy/sell
+	private static List<AcctIDAmountFPPair> expensesAcctAmtList = new ArrayList<AcctIDAmountFPPair>(); // only for dividend, not for buy/sell
 	private static KMMAcctID offsetAcctID = new KMMAcctID( "A000004" );
 	
 	private static FixedPointNumber nofStocks      = new FixedPointNumber(15); // only for buy/sell, not for dividend
@@ -68,7 +68,7 @@ public class GenDepotTrx {
 				System.err.println("Error: Cannot get account with ID '" + incomeAcctID + "'");
 		}
 
-		for ( AcctIDAmountPair elt : expensesAcctAmtList ) {
+		for ( AcctIDAmountFPPair elt : expensesAcctAmtList ) {
 			KMyMoneyAccount expensesAcct = kmmFile.getAccountByID(elt.accountID());
 			if ( expensesAcct == null )
 				System.err.println("Error: Cannot get account with ID '" + elt.accountID() + "'");
@@ -83,7 +83,7 @@ public class GenDepotTrx {
 			System.err.println("Account 2 name (income):     '" + incomeAcct.getQualifiedName() + "'");
 
 		int counter = 1;
-		for ( AcctIDAmountPair elt : expensesAcctAmtList ) {
+		for ( AcctIDAmountFPPair elt : expensesAcctAmtList ) {
 			KMyMoneyAccount expensesAcct = kmmFile.getAccountByID(elt.accountID());
 			System.err.println("Account 3." + counter + " name (expenses): '" + expensesAcct.getQualifiedName() + "'");
 			counter++;
@@ -130,12 +130,12 @@ public class GenDepotTrx {
 	private void initExpAccts() {
 		KMMAcctID expAcct1 = new KMMAcctID( "A000067" ); // Kapitalertragsteuer
 		FixedPointNumber amt1 = divDistrGross.copy().multiply(new FixedPointNumber("25/100"));
-		AcctIDAmountPair acctAmtPr1 = new AcctIDAmountPair(expAcct1, amt1);
+		AcctIDAmountFPPair acctAmtPr1 = new AcctIDAmountFPPair(expAcct1, amt1);
 		expensesAcctAmtList.add(acctAmtPr1);
 		
 		KMMAcctID expAcct2 = new KMMAcctID( "A000027" ); // Soli
 		FixedPointNumber amt2 = amt1.copy().multiply(new FixedPointNumber("55/100"));
-		AcctIDAmountPair acctAmtPr2 = new AcctIDAmountPair(expAcct2, amt2);
+		AcctIDAmountFPPair acctAmtPr2 = new AcctIDAmountFPPair(expAcct2, amt2);
 		expensesAcctAmtList.add(acctAmtPr2);
 	}
 }
