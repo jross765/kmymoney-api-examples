@@ -8,7 +8,7 @@ import org.kmymoney.api.read.impl.KMyMoneyPricePairImpl;
 import org.kmymoney.api.write.KMyMoneyWritablePrice;
 import org.kmymoney.api.write.KMyMoneyWritablePricePair;
 import org.kmymoney.api.write.impl.KMyMoneyWritableFileImpl;
-import org.kmymoney.base.basetypes.complex.KMMPricePairID;
+import org.kmymoney.base.basetypes.complex.KMMPrcPrID;
 import org.kmymoney.base.basetypes.complex.KMMQualifCurrID;
 import org.kmymoney.base.basetypes.complex.KMMQualifSecID;
 
@@ -69,7 +69,7 @@ public class GenPrc {
     }
 
     private void genPrc1(KMyMoneyWritableFileImpl kmmFile) {
-	KMMPricePairID prcPrID = new KMMPricePairID(fromSecCurr1ID, toCurr1ID);
+	KMMPrcPrID prcPrID = new KMMPrcPrID(fromSecCurr1ID, toCurr1ID);
 	KMyMoneyWritablePricePair prcPr = kmmFile.getWritablePricePairByID(prcPrID);
 	if (prcPr == null) {
 	    System.err.println("Price pair '" + prcPrID + "' does not exist in KMyMoney file yet.");
@@ -88,7 +88,7 @@ public class GenPrc {
     }
 
     private void genPrc2(KMyMoneyWritableFileImpl kmmFile) {
-	KMMPricePairID prcPrID = new KMMPricePairID(fromSecCurr2ID, toCurr2ID);
+	KMMPrcPrID prcPrID = new KMMPrcPrID(fromSecCurr2ID, toCurr2ID);
 	KMyMoneyWritablePricePair prcPr = kmmFile.getWritablePricePairByID(prcPrID);
 	if (prcPr == null) {
 	    System.err.println("Price pair '" + prcPrID + "' does not exist in KMyMoney file yet.");
