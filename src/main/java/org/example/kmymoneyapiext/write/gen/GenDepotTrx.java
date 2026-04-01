@@ -35,7 +35,7 @@ public class GenDepotTrx {
 	
 	private static FixedPointNumber nofStocks      = new FixedPointNumber(15); // only for buy/sell, not for dividend
 	private static FixedPointNumber stockPrc       = new FixedPointNumber("23080/100"); // only for buy/sell, not for dividend
-	private static FixedPointNumber divDistrGross  = new FixedPointNumber("11223/100"); // only for dividend, not for buy/sell
+	private static FixedPointNumber divDistrGross  = new FixedPointNumber("11200/100"); // only for dividend, not for buy/sell
 
 	private static LocalDate datPst = LocalDate.of(2024, 3, 1);
 	private static String descr = "Dividend payment";
@@ -112,7 +112,7 @@ public class GenDepotTrx {
 					.genDividDistribTrx(kmmFile, 
 									stockAcctID, incomeAcctID, expensesAcctAmtList, offsetAcctID, 
 									KMyMoneyTransactionSplit.Action.YIELD, divDistrGross, datPst, // This specific split-action does not really make any difference in KMyMoney --
-									descr);                                                       // it will essentially be ignored
+									descr);                                                       // it will essentially be ignored / changed to DIVIDEND by KMyMoney
 		}
 
 		// ---
@@ -123,7 +123,7 @@ public class GenDepotTrx {
 		System.out.println("OK");
 	}
 	
-	// Example for a dividend payment in Germany (domestic share).
+	// Example for taxes on a dividend payment in Germany (domestic share).
 	// If we had a foreign share (e.g. US), we would have to add a 
 	// third entry to the list: "Auslaend. Quellensteuer" (that 
 	// account is not in the test file yet).
@@ -134,7 +134,7 @@ public class GenDepotTrx {
 		expensesAcctAmtList.add(acctAmtPr1);
 		
 		KMMAcctID expAcct2 = new KMMAcctID( "A000027" ); // Soli
-		FixedPointNumber amt2 = amt1.copy().multiply(new FixedPointNumber("55/100"));
+		FixedPointNumber amt2 = amt1.copy().multiply(new FixedPointNumber("55/1000"));
 		AcctIDAmountFPPair acctAmtPr2 = new AcctIDAmountFPPair(expAcct2, amt2);
 		expensesAcctAmtList.add(acctAmtPr2);
 	}
