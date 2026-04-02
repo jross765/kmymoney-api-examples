@@ -80,3 +80,4 @@ Thus, the suggested workflow is:
 ### V. 0.8.1 &rarr; 0.9
 * Changed package structure so that module dependencies are clearer.
 * Adapted to underlying modules' versions.
+* GenDepotTrx: Now we have two variants: [BF|FP]
