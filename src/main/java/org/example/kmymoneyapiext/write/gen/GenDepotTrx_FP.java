@@ -9,14 +9,13 @@ import org.kmymoney.api.read.KMyMoneyAccount;
 import org.kmymoney.api.read.KMyMoneyTransactionSplit;
 import org.kmymoney.api.write.KMyMoneyWritableTransaction;
 import org.kmymoney.api.write.impl.KMyMoneyWritableFileImpl;
-import org.kmymoney.apiext.secacct.SecuritiesAccountTransactionManager;
-import org.kmymoney.apiext.secacct.SecuritiesAccountTransactionManager.Type;
+import org.kmymoney.apiext.secacct.SecuritiesAccountTransactionManager_FP;
 import org.kmymoney.base.basetypes.simple.KMMAcctID;
 import org.kmymoney.base.tuples.AcctIDAmountFPPair;
 
 import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
-public class GenDepotTrx {
+public class GenDepotTrx_FP {
 	// CAUTION: The following account IDs are all of type
 	// KMMAcctID. Why not KMMComplAcctID? Yes, that would work
 	// as well, but we never book to the special top-level
@@ -26,7 +25,7 @@ public class GenDepotTrx {
     private static String kmmInFileName  = "example_in.kmy";
     private static String kmmOutFileName = "example_out.kmy";
 
-	private static SecuritiesAccountTransactionManager.Type type = Type.DIVIDEND;
+	private static SecuritiesAccountTransactionManager_FP.Type type = SecuritiesAccountTransactionManager_FP.Type.DIVIDEND;
 
 	private static KMMAcctID stockAcctID  = new KMMAcctID( "A000063" );
 	private static KMMAcctID incomeAcctID = new KMMAcctID( "A000070" ); // only for dividend, not for buy/sell
@@ -45,7 +44,7 @@ public class GenDepotTrx {
 
 	public static void main(String[] args) {
 		try {
-			GenDepotTrx tool = new GenDepotTrx();
+			GenDepotTrx_FP tool = new GenDepotTrx_FP();
 			tool.kernel();
 		} catch (Exception exc) {
 			System.err.println("Execution exception. Aborting.");
@@ -95,21 +94,21 @@ public class GenDepotTrx {
 
 		KMyMoneyWritableTransaction trx = null;
 		initExpAccts();
-		if ( type == SecuritiesAccountTransactionManager.Type.BUY_STOCK ) {
-			trx = SecuritiesAccountTransactionManager
+		if ( type == SecuritiesAccountTransactionManager_FP.Type.BUY_STOCK ) {
+			trx = SecuritiesAccountTransactionManager_FP
 					.genBuyStockTrx(kmmFile, 
 									stockAcctID, expensesAcctAmtList, offsetAcctID,
 									nofStocks, stockPrc, 
 									datPst, descr);
-		} else if ( type == SecuritiesAccountTransactionManager.Type.DIVIDEND ) {
-			trx = SecuritiesAccountTransactionManager
-					.genDividDistribTrx(kmmFile, 
+		} else if ( type == SecuritiesAccountTransactionManager_FP.Type.DIVIDEND ) {
+			trx = SecuritiesAccountTransactionManager_FP
+					.genDividDistribTrx(kmmFile,
 									stockAcctID, incomeAcctID, expensesAcctAmtList, offsetAcctID, 
 									KMyMoneyTransactionSplit.Action.DIVIDEND, divDistrGross, datPst, 
 									descr);
-		} else if ( type == SecuritiesAccountTransactionManager.Type.DISTRIBUTION ) {
-			trx = SecuritiesAccountTransactionManager
-					.genDividDistribTrx(kmmFile, 
+		} else if ( type == SecuritiesAccountTransactionManager_FP.Type.DISTRIBUTION ) {
+			trx = SecuritiesAccountTransactionManager_FP
+					.genDividDistribTrx(kmmFile,
 									stockAcctID, incomeAcctID, expensesAcctAmtList, offsetAcctID, 
 									KMyMoneyTransactionSplit.Action.YIELD, divDistrGross, datPst, // This specific split-action does not really make any difference in KMyMoney --
 									descr);                                                       // it will essentially be ignored / changed to DIVIDEND by KMyMoney
