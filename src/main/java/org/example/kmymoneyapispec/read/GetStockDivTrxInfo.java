@@ -16,10 +16,10 @@ import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 public class GetStockDivTrxInfo {
     // BEGIN Example data -- adapt to your needs
-    private static String kmmFileName = "example_in.kmy";
-    private static Helper.Mode mode   = Helper.Mode.ID;
-    private static KMMTrxID trxID     = new KMMTrxID("xyz");
-    private static String acctName    = "abc";
+    private static String kmmFileName  = "example_in.kmy";
+    private static Helper.Mode mode    = Helper.Mode.ID;
+    private static KMMTrxID trxID      = new KMMTrxID("xyz");
+    private static String acctName     = "abc";
     // END Example data
 
     // -----------------------------------------------------------------
@@ -73,7 +73,7 @@ public class GetStockDivTrxInfo {
 		System.out.println("Stock acct. split:      " + specTrx.getStockAccountSplit());
 		System.out.println("Income acct. split:     " + specTrx.getIncomeAccountSplit());
 		for ( KMyMoneyTransactionSplit splt : specTrx.getExpensesSplits() ) {
-			System.out.println("Stock acct. split:      " + splt);
+			System.out.println("Expenses acct. split:   " + splt);
 		}
 		System.out.println("Offsetting acct. split: " + specTrx.getOffsettingAccountSplit());
 		
