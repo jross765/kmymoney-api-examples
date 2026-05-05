@@ -5,17 +5,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.kmymoney.api.read.KMyMoneyAccount;
 import org.kmymoney.api.read.KMyMoneyTransactionSplit;
 import org.kmymoney.api.write.KMyMoneyWritableTransaction;
 import org.kmymoney.api.write.impl.KMyMoneyWritableFileImpl;
-import org.kmymoney.apiext.secacct.SecuritiesAccountTransactionManager_FP;
+import org.kmymoney.apiext.secacct.SecuritiesAccountTransactionManager_BF;
 import org.kmymoney.base.basetypes.simple.KMMAcctID;
-import org.kmymoney.base.tuples.AcctIDAmountFPPair;
+import org.kmymoney.base.tuples.AcctIDAmountBFPair;
 
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
-
-public class GenDepotTrx_FP {
+public class GenDepotTrx {
 	// CAUTION: The following account IDs are all of type
 	// KMMAcctID. Why not KMMComplAcctID? Yes, that would work
 	// as well, but we never book to the special top-level
@@ -25,16 +24,16 @@ public class GenDepotTrx_FP {
     private static String kmmInFileName  = "example_in.kmy";
     private static String kmmOutFileName = "example_out.kmy";
 
-	private static SecuritiesAccountTransactionManager_FP.Type type = SecuritiesAccountTransactionManager_FP.Type.DIVIDEND;
+	private static SecuritiesAccountTransactionManager_BF.Type type = SecuritiesAccountTransactionManager_BF.Type.DIVIDEND;
 
 	private static KMMAcctID stockAcctID  = new KMMAcctID( "A000063" );
 	private static KMMAcctID incomeAcctID = new KMMAcctID( "A000070" ); // only for dividend, not for buy/sell
-	private static List<AcctIDAmountFPPair> expensesAcctAmtList = new ArrayList<AcctIDAmountFPPair>(); // only for dividend, not for buy/sell
+	private static List<AcctIDAmountBFPair> expensesAcctAmtList = new ArrayList<AcctIDAmountBFPair>(); // only for dividend, not for buy/sell
 	private static KMMAcctID offsetAcctID = new KMMAcctID( "A000004" );
 	
-	private static FixedPointNumber nofStocks      = new FixedPointNumber(15); // only for buy/sell, not for dividend
-	private static FixedPointNumber stockPrc       = new FixedPointNumber("23080/100"); // only for buy/sell, not for dividend
-	private static FixedPointNumber divDistrGross  = new FixedPointNumber("11200/100"); // only for dividend, not for buy/sell
+	private static BigFraction nofStocks      = BigFraction.of(15); // only for buy/sell, not for dividend
+	private static BigFraction stockPrc       = BigFraction.of(23080, 100); // only for buy/sell, not for dividend
+	private static BigFraction divDistrGross  = BigFraction.of(11200, 100); // only for dividend, not for buy/sell
 
 	private static LocalDate datPst = LocalDate.of(2024, 3, 1);
 	private static String descr = "Dividend payment";
@@ -44,7 +43,7 @@ public class GenDepotTrx_FP {
 
 	public static void main(String[] args) {
 		try {
-			GenDepotTrx_FP tool = new GenDepotTrx_FP();
+			GenDepotTrx tool = new GenDepotTrx();
 			tool.kernel();
 		} catch (Exception exc) {
 			System.err.println("Execution exception. Aborting.");
@@ -67,7 +66,7 @@ public class GenDepotTrx_FP {
 				System.err.println("Error: Cannot get account with ID '" + incomeAcctID + "'");
 		}
 
-		for ( AcctIDAmountFPPair elt : expensesAcctAmtList ) {
+		for ( AcctIDAmountBFPair elt : expensesAcctAmtList ) {
 			KMyMoneyAccount expensesAcct = kmmFile.getAccountByID(elt.accountID());
 			if ( expensesAcct == null )
 				System.err.println("Error: Cannot get account with ID '" + elt.accountID() + "'");
@@ -82,7 +81,7 @@ public class GenDepotTrx_FP {
 			System.err.println("Account 2 name (income):     '" + incomeAcct.getQualifiedName() + "'");
 
 		int counter = 1;
-		for ( AcctIDAmountFPPair elt : expensesAcctAmtList ) {
+		for ( AcctIDAmountBFPair elt : expensesAcctAmtList ) {
 			KMyMoneyAccount expensesAcct = kmmFile.getAccountByID(elt.accountID());
 			System.err.println("Account 3." + counter + " name (expenses): '" + expensesAcct.getQualifiedName() + "'");
 			counter++;
@@ -94,20 +93,20 @@ public class GenDepotTrx_FP {
 
 		KMyMoneyWritableTransaction trx = null;
 		initExpAccts();
-		if ( type == SecuritiesAccountTransactionManager_FP.Type.BUY_STOCK ) {
-			trx = SecuritiesAccountTransactionManager_FP
+		if ( type == SecuritiesAccountTransactionManager_BF.Type.BUY_STOCK ) {
+			trx = SecuritiesAccountTransactionManager_BF
 					.genBuyStockTrx(kmmFile, 
 									stockAcctID, expensesAcctAmtList, offsetAcctID,
 									nofStocks, stockPrc, 
 									datPst, descr);
-		} else if ( type == SecuritiesAccountTransactionManager_FP.Type.DIVIDEND ) {
-			trx = SecuritiesAccountTransactionManager_FP
+		} else if ( type == SecuritiesAccountTransactionManager_BF.Type.DIVIDEND ) {
+			trx = SecuritiesAccountTransactionManager_BF
 					.genDividDistribTrx(kmmFile,
 									stockAcctID, incomeAcctID, expensesAcctAmtList, offsetAcctID, 
 									KMyMoneyTransactionSplit.Action.DIVIDEND, divDistrGross, datPst, 
 									descr);
-		} else if ( type == SecuritiesAccountTransactionManager_FP.Type.DISTRIBUTION ) {
-			trx = SecuritiesAccountTransactionManager_FP
+		} else if ( type == SecuritiesAccountTransactionManager_BF.Type.DISTRIBUTION ) {
+			trx = SecuritiesAccountTransactionManager_BF
 					.genDividDistribTrx(kmmFile,
 									stockAcctID, incomeAcctID, expensesAcctAmtList, offsetAcctID, 
 									KMyMoneyTransactionSplit.Action.YIELD, divDistrGross, datPst, // This specific split-action does not really make any difference in KMyMoney --
@@ -128,13 +127,13 @@ public class GenDepotTrx_FP {
 	// account is not in the test file yet).
 	private void initExpAccts() {
 		KMMAcctID expAcct1 = new KMMAcctID( "A000067" ); // Kapitalertragsteuer
-		FixedPointNumber amt1 = divDistrGross.copy().multiply(new FixedPointNumber("25/100"));
-		AcctIDAmountFPPair acctAmtPr1 = new AcctIDAmountFPPair(expAcct1, amt1);
+		BigFraction amt1 = divDistrGross.multiply(BigFraction.of(25, 100));
+		AcctIDAmountBFPair acctAmtPr1 = new AcctIDAmountBFPair(expAcct1, amt1);
 		expensesAcctAmtList.add(acctAmtPr1);
 		
 		KMMAcctID expAcct2 = new KMMAcctID( "A000027" ); // Soli
-		FixedPointNumber amt2 = amt1.copy().multiply(new FixedPointNumber("55/1000"));
-		AcctIDAmountFPPair acctAmtPr2 = new AcctIDAmountFPPair(expAcct2, amt2);
+		BigFraction amt2 = amt1.multiply(BigFraction.of(55, 1000));
+		AcctIDAmountBFPair acctAmtPr2 = new AcctIDAmountBFPair(expAcct2, amt2);
 		expensesAcctAmtList.add(acctAmtPr2);
 	}
 }

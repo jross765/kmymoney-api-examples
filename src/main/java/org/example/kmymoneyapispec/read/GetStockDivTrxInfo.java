@@ -12,7 +12,6 @@ import org.kmymoney.apispec.read.impl.KMyMoneyStockDividendTransactionImpl;
 import org.kmymoney.base.basetypes.simple.KMMTrxID;
 
 import xyz.schnorxoborx.base.cmdlinetools.Helper;
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 public class GetStockDivTrxInfo {
     // BEGIN Example data -- adapt to your needs
@@ -53,7 +52,6 @@ public class GetStockDivTrxInfo {
 		// ---
 		// Inherited from KMyMoneyTransaction:
 		
-		FixedPointNumber balance = specTrx.getBalance();
 		BigFraction balanceRat = specTrx.getBalanceRat();
 		
 		int nofSplits = specTrx.getSplitsCount();
@@ -62,10 +60,6 @@ public class GetStockDivTrxInfo {
 		// ---
 		// Inherited from KMyMoneyStockDividendTransaction:
 		
-		FixedPointNumber grossDiv = specTrx.getGrossDividend();
-		FixedPointNumber feeTax = specTrx.getFeesTaxes();
-		FixedPointNumber netDiv = specTrx.getNetDividend();
-
 		BigFraction grossDivRat = specTrx.getGrossDividendRat();
 		BigFraction feeTaxRat = specTrx.getFeesTaxesRat();
 		BigFraction netDivRat = specTrx.getNetDividendRat();

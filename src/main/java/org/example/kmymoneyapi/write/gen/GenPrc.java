@@ -3,6 +3,7 @@ package org.example.kmymoneyapi.write.gen;
 import java.io.File;
 import java.time.LocalDate;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.kmymoney.api.read.KMyMoneyPrice;
 import org.kmymoney.api.read.impl.KMyMoneyPricePairImpl;
 import org.kmymoney.api.write.KMyMoneyWritablePrice;
@@ -12,8 +13,6 @@ import org.kmymoney.base.basetypes.complex.KMMPrcPrID;
 import org.kmymoney.base.basetypes.complex.KMMQualifCurrID;
 import org.kmymoney.base.basetypes.complex.KMMQualifSecID;
 
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
-
 public class GenPrc {
     // BEGIN Example data -- adapt to your needs
     private static String kmmInFileName  = "example_in.kmy";
@@ -22,12 +21,12 @@ public class GenPrc {
     private static KMMQualifSecID       fromSecCurr1ID = new KMMQualifSecID("E000001");
     private static KMMQualifCurrID      toCurr1ID      = new KMMQualifCurrID("EUR");
     private static LocalDate            date1          = LocalDate.of(2024, 1, 15);
-    private static FixedPointNumber     value1         = new FixedPointNumber("123/1");
+    private static BigFraction          value1         = BigFraction.of(123, 1);
     
     private static KMMQualifCurrID      fromSecCurr2ID = new KMMQualifCurrID("BRL");
     private static KMMQualifCurrID      toCurr2ID      = toCurr1ID;
     private static LocalDate            date2          = LocalDate.of(2024, 2, 15);
-    private static FixedPointNumber     value2         = new FixedPointNumber("540/100");
+    private static BigFraction          value2         = BigFraction.of(540, 100);
     
     private static KMyMoneyPrice.Source source        = KMyMoneyPrice.Source.USER;
     // END Example data

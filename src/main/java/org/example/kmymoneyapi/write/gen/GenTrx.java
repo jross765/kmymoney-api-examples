@@ -5,13 +5,12 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.apache.commons.numbers.fraction.BigFraction;
 import org.kmymoney.api.write.KMyMoneyWritableTransaction;
 import org.kmymoney.api.write.KMyMoneyWritableTransactionSplit;
 import org.kmymoney.api.write.impl.KMyMoneyWritableFileImpl;
 import org.kmymoney.base.basetypes.simple.KMMAcctID;
 import org.kmymoney.base.basetypes.simple.KMMPyeID;
-
-import xyz.schnorxoborx.base.numbers.FixedPointNumber;
 
 public class GenTrx {
     // BEGIN Example data -- adapt to your needs
@@ -25,8 +24,8 @@ public class GenTrx {
     private static KMMAcctID        toAcct1ID    = new KMMAcctID("A000010"); // Expense:Bildung:Zeitungen
     private static KMMPyeID         pye1ID       = new KMMPyeID("P000009");  // optional, may be null
     private static KMyMoneyWritableTransactionSplit.Action act1 = null;      // Do not set here 
-    private static FixedPointNumber amt1         = new FixedPointNumber("1234/100");
-    private static FixedPointNumber qty1         = amt1;
+    private static BigFraction      amt1         = BigFraction.of(1234, 100);
+    private static BigFraction      qty1         = amt1;
     private static LocalDate        datPst1      = LocalDate.of(2024, 2, 15);
     private static String           descr1       = "Bahnhof Zeitungskiosk";
     
@@ -38,15 +37,15 @@ public class GenTrx {
     private static KMMAcctID        toAcct22ID   = new KMMAcctID("A000020"); // Expense:Sonstiges:Bankgebühren
     private static KMMPyeID         pye2ID       = null;                     // Do not set here
     private static KMyMoneyWritableTransactionSplit.Action act2 = KMyMoneyWritableTransactionSplit.Action.BUY_SHARES;
-    private static FixedPointNumber qty22        = new FixedPointNumber("15");
-    private static FixedPointNumber prc1         = new FixedPointNumber("1/1");       // optional
-    private static FixedPointNumber prc2         = new FixedPointNumber("15574/100"); // half-mandatory
-    private static FixedPointNumber prc3         = prc1;                              // optional
-    private static FixedPointNumber amt22        = qty22.copy().multiply(prc2);       // net
-    private static FixedPointNumber amt23        = new FixedPointNumber("95/10");     // fees & commissions
-    private static FixedPointNumber amt21        = amt22.copy().add(amt23);           // gross
-    private static FixedPointNumber qty21        = amt21;
-    private static FixedPointNumber qty23        = amt23;
+    private static BigFraction      qty22        = BigFraction.of(15);
+    private static BigFraction      prc1         = BigFraction.of(1);          // optional
+    private static BigFraction      prc2         = BigFraction.of(15574, 100); // half-mandatory
+    private static BigFraction      prc3         = prc1;                       // optional
+    private static BigFraction      amt22        = qty22.multiply(prc2);       // net
+    private static BigFraction      amt23        = BigFraction.of(95, 10);     // fees & commissions
+    private static BigFraction      amt21        = amt22.add(amt23);           // gross
+    private static BigFraction      qty21        = amt21;
+    private static BigFraction      qty23        = amt23;
     private static LocalDate        datPst2      = LocalDate.of(2024, 1, 15);
     private static String           descr2       = "Aktienkauf";
     // END Example data
@@ -102,8 +101,8 @@ public class GenTrx {
 	// ---
 
 	KMyMoneyWritableTransactionSplit splt1 = trx.createWritableSplit(kmmFile.getAccountByID(fromAcct1ID));
-	splt1.setValue(new FixedPointNumber(amt1.copy().negate()));
-	splt1.setShares(new FixedPointNumber(qty1.copy().negate()));
+	splt1.setValue(amt1.negate());
+	splt1.setShares(qty1.negate());
 	splt1.setPayeeID(pye1ID);
 	// This is what we actually want (cf. above):
 	splt1.setMemo(descr1);
@@ -112,8 +111,8 @@ public class GenTrx {
 	// ---
 
 	KMyMoneyWritableTransactionSplit splt2 = trx.createWritableSplit(kmmFile.getAccountByID(toAcct1ID));
-	splt2.setValue(new FixedPointNumber(amt1));
-	splt2.setShares(new FixedPointNumber(qty1));
+	splt2.setValue(amt1);
+	splt2.setShares(qty1);
 	splt2.setPayeeID(pye1ID);
 	// Cf. above
 	splt2.setMemo(descr1);
@@ -145,8 +144,8 @@ public class GenTrx {
 	// ---
 
 	KMyMoneyWritableTransactionSplit splt1 = trx.createWritableSplit(kmmFile.getAccountByID(fromAcct2ID));
-	splt1.setValue(new FixedPointNumber(amt21.copy().negate()));
-	splt1.setShares(new FixedPointNumber(qty21.copy().negate()));
+	splt1.setValue(amt21.negate());
+	splt1.setShares(qty21.negate());
 	splt1.setPrice(prc1); // completely optional 
 	// This is what we actually want (cf. above):
 	splt1.setMemo(descr2); // sic, only this one
@@ -155,8 +154,8 @@ public class GenTrx {
 	// ---
 
 	KMyMoneyWritableTransactionSplit splt2 = trx.createWritableSplit(kmmFile.getAccountByID(toAcct21ID));
-	splt2.setValue(new FixedPointNumber(amt22));
-	splt2.setShares(new FixedPointNumber(qty22));
+	splt2.setValue(amt22);
+	splt2.setShares(qty22);
 	splt2.setPrice(prc2); // optional (sic), but advisable
 	splt2.setAction(act2);
 	splt2.setMemo("Kauf SAP");
@@ -165,8 +164,8 @@ public class GenTrx {
 	// ---
 
 	KMyMoneyWritableTransactionSplit splt3 = trx.createWritableSplit(kmmFile.getAccountByID(toAcct22ID));
-	splt3.setValue(new FixedPointNumber(amt23));
-	splt3.setShares(new FixedPointNumber(qty23));
+	splt3.setValue(amt23);
+	splt3.setShares(qty23);
 	splt3.setPrice(prc3); // completely optional
 	splt3.setMemo("Bankgebühren");
 	System.out.println("Split 3 to write: " + splt3.toString());
