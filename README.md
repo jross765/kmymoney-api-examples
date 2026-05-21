@@ -1,7 +1,6 @@
 # Notes on the Module "Examples"
 
 ## What Does It Do?
-
 Guess what: This module contains example pograms (no, really?!).
 They demonstrate how to use the API (all levels: Core, Specialized Entities, Extensions).
 
@@ -77,7 +76,6 @@ Thus, the suggested workflow is:
 * This repository contains no history before V. 0.8 (cf. notes in parent repo).
 
 ## Major Changes
-### V. 0.8.1 &rarr; 0.9
-* Changed package structure so that module dependencies are clearer.
-* Adapted to underlying modules' versions.
-* GenDepotTrx: Now we have two variants: [BF|FP]
+
+Cf. document "[Major Changes](https://github.com/jross765/JKMyMoneyLibNTools/kmymoney-api-examples/major_changes.md)".
+
