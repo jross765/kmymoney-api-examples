@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.kmymoney.api.read.KMyMoneyPrice;
 import org.kmymoney.api.read.KMyMoneySecurity;
 import org.kmymoney.api.read.impl.KMyMoneyFileImpl;
+import org.kmymoney.base.basetypes.simple.KMMSecID;
 
 import xyz.schnorxoborx.base.beanbase.NoEntryFoundException;
 import xyz.schnorxoborx.base.beanbase.TooManyEntriesFoundException;
@@ -23,7 +24,7 @@ public class GetSecInfo {
     // BEGIN Example data -- adapt to your needs
     private static String kmmFileName = "example_in.kmy";
     private static Mode mode          = Mode.ID;
-    private static String secID       = "xyz";
+    private static KMMSecID secID     = new KMMSecID("E000xyz");
     private static String isin        = "abc";
     private static String secName     = "def";
     // END Example data
