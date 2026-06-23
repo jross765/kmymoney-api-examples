@@ -15,17 +15,16 @@ import org.kmymoney.base.basetypes.simple.KMMAcctID;
 import org.kmymoney.base.tuples.AcctIDAmountBFPair;
 
 public class GenDepotTrx {
+	// BEGIN Example data -- adapt to your needs
+	private static String kmmInFileName  = "example_in.kmy";
+	private static String kmmOutFileName = "example_out.kmy";
+
+	private static SecuritiesAccountTransactionManager_BF.Type type = SecuritiesAccountTransactionManager_BF.Type.DIVIDEND;
+
 	// CAUTION: The following account IDs are all of type
 	// KMMAcctID. Why not KMMComplAcctID? Yes, that would work
 	// as well, but we never book to the special top-level
 	// accounts. Thus, this is a precautionary measure.
-
-	// BEGIN Example data -- adapt to your needs
-    private static String kmmInFileName  = "example_in.kmy";
-    private static String kmmOutFileName = "example_out.kmy";
-
-	private static SecuritiesAccountTransactionManager_BF.Type type = SecuritiesAccountTransactionManager_BF.Type.DIVIDEND;
-
 	private static KMMAcctID stockAcctID  = new KMMAcctID( "A000063" );
 	private static KMMAcctID incomeAcctID = new KMMAcctID( "A000070" ); // only for dividend, not for buy/sell
 	private static List<AcctIDAmountBFPair> expensesAcctAmtList = new ArrayList<AcctIDAmountBFPair>(); // only for dividend, not for buy/sell
@@ -96,6 +95,12 @@ public class GenDepotTrx {
 		if ( type == SecuritiesAccountTransactionManager_BF.Type.BUY_STOCK ) {
 			trx = SecuritiesAccountTransactionManager_BF
 					.genBuyStockTrx(kmmFile, 
+									stockAcctID, expensesAcctAmtList, offsetAcctID,
+									nofStocks, stockPrc, 
+									datPst, descr);
+		} else if ( type == SecuritiesAccountTransactionManager_BF.Type.SELL_STOCK ) {
+			trx = SecuritiesAccountTransactionManager_BF
+					.genSellStockTrx(kmmFile, 
 									stockAcctID, expensesAcctAmtList, offsetAcctID,
 									nofStocks, stockPrc, 
 									datPst, descr);
