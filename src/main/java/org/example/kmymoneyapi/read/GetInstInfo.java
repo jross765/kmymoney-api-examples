@@ -13,18 +13,12 @@ import xyz.schnorxoborx.base.beanbase.TooManyEntriesFoundException;
 
 public class GetInstInfo {
 
-	public enum Mode {
-		ID, NAME
-	}
-
-	// -----------------------------------------------------------------
-
 	// BEGIN Example data -- adapt to your needs
-	private static String    kmmFileName = "example_in.kmy";
-	private static Mode      mode        = Mode.ID;
-	private static KMMInstID instID      = new KMMInstID("I000xyz");
-	private static String    isin        = "abc";
-	private static String    secName     = "def";
+	private static String      kmmFileName = "example_in.kmy";
+	private static Helper.Mode mode        = Helper.Mode.ID;
+	private static KMMInstID   instID      = new KMMInstID("I000xyz");
+	private static String      isin        = "DE0123456789";
+	private static String      secName     = "def";
 	// END Example data
 
 	// -----------------------------------------------------------------
@@ -44,13 +38,13 @@ public class GetInstInfo {
 		KMyMoneyFileImpl gcshFile = new KMyMoneyFileImpl(new File(kmmFileName));
 
 		KMyMoneyInstitution inst = null;
-		if ( mode == Mode.ID ) {
+		if ( mode == Helper.Mode.ID ) {
 			inst = gcshFile.getInstitutionByID(instID);
 			if ( inst == null ) {
 				System.err.println("Could not find a institution with this ID.");
 				throw new NoEntryFoundException();
 			}
-		} else if ( mode == Mode.NAME ) {
+		} else if ( mode == Helper.Mode.NAME ) {
 			Collection<KMyMoneyInstitution> secCurrList = gcshFile.getInstitutionsByName(secName);
 			if ( secCurrList.size() == 0 ) {
 				System.err.println("Could not find institution matching this name.");

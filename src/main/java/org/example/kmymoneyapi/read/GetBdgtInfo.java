@@ -13,19 +13,11 @@ import xyz.schnorxoborx.base.beanbase.NoEntryFoundException;
 import xyz.schnorxoborx.base.beanbase.TooManyEntriesFoundException;
 
 public class GetBdgtInfo {
-
-	public enum Mode {
-		ID,
-		NAME
-	}
-
-	// -----------------------------------------------------------------
-
 	// BEGIN Example data -- adapt to your needs
-	private static String     kmmFileName  = "example_in.kmy";
-	private static Mode       mode         = Mode.ID;
-	private static KMMBdgtID  bdgtID       = new KMMBdgtID("B000xyz");
-	private static String     bdgtName     = "def";
+	private static String      kmmFileName  = "example_in.kmy";
+	private static Helper.Mode mode         = Helper.Mode.ID;
+	private static KMMBdgtID   bdgtID       = new KMMBdgtID("B000xyz");
+	private static String      bdgtName     = "def";
 	// END Example data
 
 	// -----------------------------------------------------------------
@@ -45,13 +37,13 @@ public class GetBdgtInfo {
 		KMyMoneyFileImpl gcshFile = new KMyMoneyFileImpl(new File(kmmFileName));
 
 		KMyMoneyBudget bdgt = null;
-		if ( mode == Mode.ID ) {
+		if ( mode == Helper.Mode.ID ) {
 			bdgt = gcshFile.getBudgetByID(bdgtID);
 			if ( bdgt == null ) {
 				System.err.println("Could not find a budget with this ID.");
 				throw new NoEntryFoundException();
 			}
-		} else if ( mode == Mode.NAME ) {
+		} else if ( mode == Helper.Mode.NAME ) {
 			Collection<KMyMoneyBudget> secCurrList = gcshFile.getBudgetsByName(bdgtName);
 			if ( secCurrList.size() == 0 ) {
 				System.err.println("Could not find budgets matching this name.");

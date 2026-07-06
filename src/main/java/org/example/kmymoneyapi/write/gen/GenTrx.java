@@ -13,171 +13,171 @@ import org.kmymoney.base.basetypes.simple.KMMAcctID;
 import org.kmymoney.base.basetypes.simple.KMMPyeID;
 
 public class GenTrx {
-    // BEGIN Example data -- adapt to your needs
-    private static String kmmInFileName  = "example_in.kmy";
-    private static String kmmOutFileName = "example_out.kmy";
+	// BEGIN Example data -- adapt to your needs
+	private static String kmmInFileName  = "example_in.kmy";
+	private static String kmmOutFileName = "example_out.kmy";
     
-    // ---
+	// ---
     
-    // Following two account IDs: sic, not KMMComplAcctID
-    private static KMMAcctID        fromAcct1ID  = new KMMAcctID("A000066"); // Asset:Barvermögen:Bargeld:Kasse Ada
-    private static KMMAcctID        toAcct1ID    = new KMMAcctID("A000010"); // Expense:Bildung:Zeitungen
-    private static KMMPyeID         pye1ID       = new KMMPyeID("P000009");  // optional, may be null
-    private static KMyMoneyWritableTransactionSplit.Action act1 = null;      // Do not set here 
-    private static BigFraction      amt1         = BigFraction.of(1234, 100);
-    private static BigFraction      qty1         = amt1;
-    private static LocalDate        datPst1      = LocalDate.of(2024, 2, 15);
-    private static String           descr1       = "Bahnhof Zeitungskiosk";
+	// Following two account IDs: sic, not KMMComplAcctID
+	private static KMMAcctID        fromAcct1ID  = new KMMAcctID("A000066"); // Asset:Barvermögen:Bargeld:Kasse Ada
+	private static KMMAcctID        toAcct1ID    = new KMMAcctID("A000010"); // Expense:Bildung:Zeitungen
+	private static KMMPyeID         pye1ID       = new KMMPyeID("P000009");  // optional, may be null
+	private static KMyMoneyWritableTransactionSplit.Action act1 = null;      // Do not set here 
+	private static BigFraction      amt1         = BigFraction.of(1234, 100);
+	private static BigFraction      qty1         = amt1;
+	private static LocalDate        datPst1      = LocalDate.of(2024, 2, 15);
+	private static String           descr1       = "Bahnhof Zeitungskiosk";
     
-    // ---
+	// ---
     
-    // Following two account IDs: sic, not KMMComplAcctID
-    private static KMMAcctID        fromAcct2ID  = new KMMAcctID("A000004"); // Asset:Barvermögen:Giro RaiBa
-    private static KMMAcctID        toAcct21ID   = new KMMAcctID("A000063"); // Asset:Finanzanlagen:Depot RaiBa:DE0007164600 SAP
-    private static KMMAcctID        toAcct22ID   = new KMMAcctID("A000020"); // Expense:Sonstiges:Bankgebühren
-    private static KMMPyeID         pye2ID       = null;                     // Do not set here
-    private static KMyMoneyWritableTransactionSplit.Action act2 = KMyMoneyWritableTransactionSplit.Action.BUY_SHARES;
-    private static BigFraction      qty22        = BigFraction.of(15);
-    private static BigFraction      prc1         = BigFraction.of(1);          // optional
-    private static BigFraction      prc2         = BigFraction.of(15574, 100); // half-mandatory
-    private static BigFraction      prc3         = prc1;                       // optional
-    private static BigFraction      amt22        = qty22.multiply(prc2);       // net
-    private static BigFraction      amt23        = BigFraction.of(95, 10);     // fees & commissions
-    private static BigFraction      amt21        = amt22.add(amt23);           // gross
-    private static BigFraction      qty21        = amt21;
-    private static BigFraction      qty23        = amt23;
-    private static LocalDate        datPst2      = LocalDate.of(2024, 1, 15);
-    private static String           descr2       = "Aktienkauf";
-    // END Example data
+	// Following two account IDs: sic, not KMMComplAcctID
+	private static KMMAcctID        fromAcct2ID  = new KMMAcctID("A000004"); // Asset:Barvermögen:Giro RaiBa
+	private static KMMAcctID        toAcct21ID   = new KMMAcctID("A000063"); // Asset:Finanzanlagen:Depot RaiBa:DE0007164600 SAP
+	private static KMMAcctID        toAcct22ID   = new KMMAcctID("A000020"); // Expense:Sonstiges:Bankgebühren
+	private static KMMPyeID         pye2ID       = null;                     // Do not set here
+	private static KMyMoneyWritableTransactionSplit.Action act2 = KMyMoneyWritableTransactionSplit.Action.BUY_SHARES;
+	private static BigFraction      qty22        = BigFraction.of(15);
+	private static BigFraction      prc1         = BigFraction.of(1);          // optional
+	private static BigFraction      prc2         = BigFraction.of(15574, 100); // half-mandatory
+	private static BigFraction      prc3         = prc1;                       // optional
+	private static BigFraction      amt22        = qty22.multiply(prc2);       // net
+	private static BigFraction      amt23        = BigFraction.of(95, 10);     // fees & commissions
+	private static BigFraction      amt21        = amt22.add(amt23);           // gross
+	private static BigFraction      qty21        = amt21;
+	private static BigFraction      qty23        = amt23;
+	private static LocalDate        datPst2      = LocalDate.of(2024, 1, 15);
+	private static String           descr2       = "Aktienkauf";
+	// END Example data
 
-    // -----------------------------------------------------------------
+	// -----------------------------------------------------------------
 
-    public static void main(String[] args) {
-	try {
-	    GenTrx tool = new GenTrx();
-	    tool.kernel();
-	} catch (Exception exc) {
-	    System.err.println("Execution exception. Aborting.");
-	    exc.printStackTrace();
-	    System.exit(1);
+	public static void main(String[] args) {
+		try {
+			GenTrx tool = new GenTrx();
+			tool.kernel();
+		} catch (Exception exc) {
+			System.err.println("Execution exception. Aborting.");
+			exc.printStackTrace();
+			System.exit(1);
+		}
 	}
-    }
 
-    protected void kernel() throws Exception {
-	KMyMoneyWritableFileImpl kmmFile = new KMyMoneyWritableFileImpl(new File(kmmInFileName));
+	protected void kernel() throws Exception {
+		KMyMoneyWritableFileImpl kmmFile = new KMyMoneyWritableFileImpl(new File(kmmInFileName));
 
-	System.out.println("---------------------------");
-	System.out.println("Generate transaction no. 1:");
-	System.out.println("---------------------------");
-	genTrx1(kmmFile);
+		System.out.println("---------------------------");
+		System.out.println("Generate transaction no. 1:");
+		System.out.println("---------------------------");
+		genTrx1(kmmFile);
 
-	System.out.println("");
-	System.out.println("---------------------------");
-	System.out.println("Generate transaction no. 2:");
-	System.out.println("---------------------------");
-	genTrx2(kmmFile);
-	
-	System.out.println("");
-	System.out.println("---------------------------");
-	System.out.println("Write file:");
-	System.out.println("---------------------------");
-	kmmFile.writeFile(new File(kmmOutFileName));
-	
-	System.out.println("OK");
-    }
+		System.out.println("");
+		System.out.println("---------------------------");
+		System.out.println("Generate transaction no. 2:");
+		System.out.println("---------------------------");
+		genTrx2(kmmFile);
 
-    private void genTrx1(KMyMoneyWritableFileImpl kmmFile) throws IOException {
-	System.err.println("Account 1 name (from): '" + kmmFile.getAccountByID(fromAcct1ID).getQualifiedName() + "'");
-	System.err.println("Account 2 name (to):   '" + kmmFile.getAccountByID(toAcct1ID).getQualifiedName() + "'");
+		System.out.println("");
+		System.out.println("---------------------------");
+		System.out.println("Write file:");
+		System.out.println("---------------------------");
+		kmmFile.writeFile(new File(kmmOutFileName));
 
-	// ---
+		System.out.println("OK");
+	}
 
-	KMyMoneyWritableTransaction trx = kmmFile.createWritableTransaction();
-	// Does not work like that: The description/memo on transaction
-	// level is purely internal:
-	// trx.setDescription(description);
-	trx.setMemo("Generated by GenTrx, " + LocalDateTime.now());
+	private void genTrx1(KMyMoneyWritableFileImpl kmmFile) throws IOException {
+		System.err.println("Account 1 name (from): '" + kmmFile.getAccountByID(fromAcct1ID).getQualifiedName() + "'");
+		System.err.println("Account 2 name (to):   '" + kmmFile.getAccountByID(toAcct1ID).getQualifiedName() + "'");
 
-	// ---
+		// ---
 
-	KMyMoneyWritableTransactionSplit splt1 = trx.createWritableSplit(kmmFile.getAccountByID(fromAcct1ID));
-	splt1.setValue(amt1.negate());
-	splt1.setShares(qty1.negate());
-	splt1.setPayeeID(pye1ID);
-	// This is what we actually want (cf. above):
-	splt1.setMemo(descr1);
-	System.out.println("Split 1 to write: " + splt1.toString());
+		KMyMoneyWritableTransaction trx = kmmFile.createWritableTransaction();
+		// Does not work like that: The description/memo on transaction
+		// level is purely internal:
+		// trx.setDescription(description);
+		trx.setMemo("Generated by GenTrx, " + LocalDateTime.now());
 
-	// ---
+		// ---
 
-	KMyMoneyWritableTransactionSplit splt2 = trx.createWritableSplit(kmmFile.getAccountByID(toAcct1ID));
-	splt2.setValue(amt1);
-	splt2.setShares(qty1);
-	splt2.setPayeeID(pye1ID);
-	// Cf. above
-	splt2.setMemo(descr1);
-	System.out.println("Split 2 to write: " + splt2.toString());
+		KMyMoneyWritableTransactionSplit splt1 = trx.createWritableSplit(kmmFile.getAccountByID(fromAcct1ID));
+		splt1.setValue(amt1.negate());
+		splt1.setShares(qty1.negate());
+		splt1.setPayeeID(pye1ID);
+		// This is what we actually want (cf. above):
+		splt1.setMemo(descr1);
+		System.out.println("Split 1 to write: " + splt1.toString());
 
-	// ---
+		// ---
 
-	trx.setDatePosted(datPst1);
-	trx.setDateEntered(LocalDate.now());
+		KMyMoneyWritableTransactionSplit splt2 = trx.createWritableSplit(kmmFile.getAccountByID(toAcct1ID));
+		splt2.setValue(amt1);
+		splt2.setShares(qty1);
+		splt2.setPayeeID(pye1ID);
+		// Cf. above
+		splt2.setMemo(descr1);
+		System.out.println("Split 2 to write: " + splt2.toString());
 
-	// ---
+		// ---
 
-	System.out.println("Transaction to write: " + trx.toString());
-    }
+		trx.setDatePosted(datPst1);
+		trx.setDateEntered(LocalDate.now());
 
-    private void genTrx2(KMyMoneyWritableFileImpl kmmFile) throws IOException {
-	System.err.println("Account 1 name (from): '" + kmmFile.getAccountByID(fromAcct2ID).getQualifiedName() + "'");
-	System.err.println("Account 2 name (to):   '" + kmmFile.getAccountByID(toAcct21ID).getQualifiedName() + "'");
-	System.err.println("Account 3 name (to):   '" + kmmFile.getAccountByID(toAcct22ID).getQualifiedName() + "'");
+		// ---
 
-	// ---
+		System.out.println("Transaction to write: " + trx.toString());
+	}
 
-	KMyMoneyWritableTransaction trx = kmmFile.createWritableTransaction();
-	// Does not work like that: The description/memo on transaction
-	// level is purely internal:
-	// trx.setDescription(description);
-	trx.setMemo("Generated by GenTrx, " + LocalDateTime.now());
+	private void genTrx2(KMyMoneyWritableFileImpl kmmFile) throws IOException {
+		System.err.println("Account 1 name (from): '" + kmmFile.getAccountByID(fromAcct2ID).getQualifiedName() + "'");
+		System.err.println("Account 2 name (to):   '" + kmmFile.getAccountByID(toAcct21ID).getQualifiedName() + "'");
+		System.err.println("Account 3 name (to):   '" + kmmFile.getAccountByID(toAcct22ID).getQualifiedName() + "'");
 
-	// ---
+		// ---
 
-	KMyMoneyWritableTransactionSplit splt1 = trx.createWritableSplit(kmmFile.getAccountByID(fromAcct2ID));
-	splt1.setValue(amt21.negate());
-	splt1.setShares(qty21.negate());
-	splt1.setPrice(prc1); // completely optional 
-	// This is what we actually want (cf. above):
-	splt1.setMemo(descr2); // sic, only this one
-	System.out.println("Split 1 to write: " + splt1.toString());
+		KMyMoneyWritableTransaction trx = kmmFile.createWritableTransaction();
+		// Does not work like that: The description/memo on transaction
+		// level is purely internal:
+		// trx.setDescription(description);
+		trx.setMemo("Generated by GenTrx, " + LocalDateTime.now());
 
-	// ---
+		// ---
 
-	KMyMoneyWritableTransactionSplit splt2 = trx.createWritableSplit(kmmFile.getAccountByID(toAcct21ID));
-	splt2.setValue(amt22);
-	splt2.setShares(qty22);
-	splt2.setPrice(prc2); // optional (sic), but advisable
-	splt2.setAction(act2);
-	splt2.setMemo("Kauf SAP");
-	System.out.println("Split 2 to write: " + splt2.toString());
+		KMyMoneyWritableTransactionSplit splt1 = trx.createWritableSplit(kmmFile.getAccountByID(fromAcct2ID));
+		splt1.setValue(amt21.negate());
+		splt1.setShares(qty21.negate());
+		splt1.setPrice(prc1); // completely optional
+		// This is what we actually want (cf. above):
+		splt1.setMemo(descr2); // sic, only this one
+		System.out.println("Split 1 to write: " + splt1.toString());
 
-	// ---
+		// ---
 
-	KMyMoneyWritableTransactionSplit splt3 = trx.createWritableSplit(kmmFile.getAccountByID(toAcct22ID));
-	splt3.setValue(amt23);
-	splt3.setShares(qty23);
-	splt3.setPrice(prc3); // completely optional
-	splt3.setMemo("Bankgebühren");
-	System.out.println("Split 3 to write: " + splt3.toString());
+		KMyMoneyWritableTransactionSplit splt2 = trx.createWritableSplit(kmmFile.getAccountByID(toAcct21ID));
+		splt2.setValue(amt22);
+		splt2.setShares(qty22);
+		splt2.setPrice(prc2); // optional (sic), but advisable
+		splt2.setAction(act2);
+		splt2.setMemo("Kauf SAP");
+		System.out.println("Split 2 to write: " + splt2.toString());
 
-	// ---
+		// ---
 
-	trx.setDatePosted(datPst2);
-	trx.setDateEntered(LocalDate.now());
+		KMyMoneyWritableTransactionSplit splt3 = trx.createWritableSplit(kmmFile.getAccountByID(toAcct22ID));
+		splt3.setValue(amt23);
+		splt3.setShares(qty23);
+		splt3.setPrice(prc3); // completely optional
+		splt3.setMemo("Bankgebühren");
+		System.out.println("Split 3 to write: " + splt3.toString());
 
-	// ---
+		// ---
 
-	System.out.println("Transaction to write: " + trx.toString());
-    }
+		trx.setDatePosted(datPst2);
+		trx.setDateEntered(LocalDate.now());
+
+		// ---
+
+		System.out.println("Transaction to write: " + trx.toString());
+	}
 
 }

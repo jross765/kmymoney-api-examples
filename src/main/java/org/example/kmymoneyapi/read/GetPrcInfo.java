@@ -9,19 +9,16 @@ import org.kmymoney.api.read.impl.KMyMoneyFileImpl;
 import org.kmymoney.base.basetypes.complex.KMMPrcID;
 import org.kmymoney.base.basetypes.simple.KMMSecID;
 
-public class GetPrcInfo
-{
-    // -----------------------------------------------------------------
-
-    // BEGIN Example data -- adapt to your needs
-    private static String    kmmFileName = "example_in.kmy";
-    private static KMMPrcID  prc1ID      = new KMMPrcID("USD", "EUR", "2023-11-01");
-    private static KMMPrcID  prc2ID      = new KMMPrcID("E000001", "EUR", "2012-03-05");
-    private static String    prc2IDStr   = "E000001:EUR:2012-03-05";
-    private static KMMSecID  secID       = new KMMSecID("E000001");
-    private static String    isin        = "DE0007164600";
-    private static LocalDate date        = LocalDate.of(2012, 3, 5);
-    // END Example data
+public class GetPrcInfo {
+	// BEGIN Example data -- adapt to your needs
+	private static String    kmmFileName = "example_in.kmy";
+	private static KMMPrcID  prc1ID      = new KMMPrcID("USD", "EUR", "2023-11-01");
+	private static KMMPrcID  prc2ID      = new KMMPrcID("E000001", "EUR", "2012-03-05");
+	private static String    prc2IDStr   = "E000001:EUR:2012-03-05";
+	private static KMMSecID  secID       = new KMMSecID("E000001");
+	private static String    isin        = "DE0007164600";
+	private static LocalDate date        = LocalDate.of(2012, 3, 5);
+	// END Example data
 
 	// -----------------------------------------------------------------
 
@@ -41,23 +38,23 @@ public class GetPrcInfo
 
 		KMyMoneyPrice prc = null;
 
-	    // 1) By ID
+		// 1) By ID
 		prc = kmmFile.getPriceByID(prc1ID);
 		showPrcInfo(prc);
-		
+
 		prc = kmmFile.getPriceByID(prc2ID);
 		showPrcInfo(prc);
-		
-	    prc2ID = KMMPrcID.parse(prc2IDStr); // Just another way of doing it
+
+		prc2ID = KMMPrcID.parse(prc2IDStr); // Just another way of doing it
 		prc = kmmFile.getPriceByID(prc2ID);
 		showPrcInfo(prc);
-		
+
 		// 2) By Security-ID and date
 		prc = kmmFile.getPriceBySecIDDate(secID, date);
 		showPrcInfo(prc);
-		
-		// 3) By ISIN and date 
-		//    (or whatever security identifier you fill the field code with)
+
+		// 3) By ISIN and date
+		// (or whatever security identifier you fill the field code with)
 		KMyMoneySecurity sec = kmmFile.getSecurityByCode(isin);
 		prc = kmmFile.getPriceBySecIDDate(sec.getID(), date);
 		showPrcInfo(prc);
@@ -65,7 +62,7 @@ public class GetPrcInfo
 
 	private void showPrcInfo(KMyMoneyPrice prc) {
 		System.out.println("--------------");
-		
+
 		try {
 			System.out.println("Parent price pair: '" + prc.getParentPricePair() + "'");
 		} catch (Exception exc) {
@@ -120,5 +117,5 @@ public class GetPrcInfo
 			System.out.println("Source:            " + "ERROR");
 		}
 	}
-	
+
 }

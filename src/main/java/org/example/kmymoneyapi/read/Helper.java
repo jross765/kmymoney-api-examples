@@ -2,9 +2,9 @@ package org.example.kmymoneyapi.read;
 
 class Helper {
 
-    public enum Mode {
-	ID, 
-	NAME
-    }
+	public enum Mode {
+		ID,
+		NAME
+	}
 
 }

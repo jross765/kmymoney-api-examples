@@ -27,12 +27,12 @@ public class GenDepotTrx {
 	// accounts. Thus, this is a precautionary measure.
 	private static KMMAcctID stockAcctID  = new KMMAcctID( "A000063" );
 	private static KMMAcctID incomeAcctID = new KMMAcctID( "A000070" ); // only for dividend, not for buy/sell
-	private static List<AcctIDAmountBFPair> expensesAcctAmtList = new ArrayList<AcctIDAmountBFPair>(); // only for dividend, not for buy/sell
 	private static KMMAcctID offsetAcctID = new KMMAcctID( "A000004" );
+	private static List<AcctIDAmountBFPair> expensesAcctAmtList = new ArrayList<AcctIDAmountBFPair>();
 	
-	private static BigFraction nofStocks      = BigFraction.of(15); // only for buy/sell, not for dividend
-	private static BigFraction stockPrc       = BigFraction.of(23080, 100); // only for buy/sell, not for dividend
-	private static BigFraction divDistrGross  = BigFraction.of(11200, 100); // only for dividend, not for buy/sell
+	private static BigFraction nofStocks     = BigFraction.of(15); // only for buy/sell, not for dividend
+	private static BigFraction stockPrc      = BigFraction.of(23080, 100); // only for buy/sell, not for dividend
+	private static BigFraction divDistrGross = BigFraction.of(11200, 100); // only for dividend, not for buy/sell
 
 	private static LocalDate datPst = LocalDate.of(2024, 3, 1);
 	private static String descr = "Dividend payment";
@@ -90,8 +90,9 @@ public class GenDepotTrx {
 
 		// ---
 
-		KMyMoneyWritableTransaction trx = null;
 		initExpAccts();
+		
+		KMyMoneyWritableTransaction trx = null;
 		if ( type == SecuritiesAccountTransactionManager_BF.Type.BUY_STOCK ) {
 			trx = SecuritiesAccountTransactionManager_BF
 					.genBuyStockTrx(kmmFile, 
@@ -130,15 +131,21 @@ public class GenDepotTrx {
 	// If we had a foreign share (e.g. US), we would have to add a 
 	// third entry to the list: "Auslaend. Quellensteuer" (that 
 	// account is not in the test file yet).
+	// For buying/selling a stock, you typically would have the bank's
+	// and the stock exchnage's fee and possibly a special tax (for 
+	// a French stock, say).
 	private void initExpAccts() {
-		KMMAcctID expAcct1 = new KMMAcctID( "A000067" ); // Kapitalertragsteuer
+		KMMAcctID expAcct1 = new KMMAcctID( "A000067" ); // Kapitalertragsteuer*
 		BigFraction amt1 = divDistrGross.multiply(BigFraction.of(25, 100));
 		AcctIDAmountBFPair acctAmtPr1 = new AcctIDAmountBFPair(expAcct1, amt1);
 		expensesAcctAmtList.add(acctAmtPr1);
 		
-		KMMAcctID expAcct2 = new KMMAcctID( "A000027" ); // Soli
+		KMMAcctID expAcct2 = new KMMAcctID( "A000027" ); // Soli(daritaetszuschlag)**
 		BigFraction amt2 = amt1.multiply(BigFraction.of(55, 1000));
 		AcctIDAmountBFPair acctAmtPr2 = new AcctIDAmountBFPair(expAcct2, amt2);
 		expensesAcctAmtList.add(acctAmtPr2);
 	}
+	
+	// *)  Capital gains tax
+	// **) Solidarity surcharge (a German tax specialty)
 }

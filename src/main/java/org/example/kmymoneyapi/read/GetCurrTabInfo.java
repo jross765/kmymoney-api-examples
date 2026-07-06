@@ -6,27 +6,27 @@ import org.kmymoney.api.pricedb.ComplexPriceTable;
 import org.kmymoney.api.read.impl.KMyMoneyFileImpl;
 
 public class GetCurrTabInfo {
-    // BEGIN Example data -- adapt to your needs
-    private static String kmmFileName = "example_in.kmy";
-    // END Example data
+	// BEGIN Example data -- adapt to your needs
+	private static String kmmFileName = "example_in.kmy";
+	// END Example data
 
-    // -----------------------------------------------------------------
+	// -----------------------------------------------------------------
 
-    public static void main(String[] args) {
-    	try {
-    		GetCurrTabInfo tool = new GetCurrTabInfo();
-    		tool.kernel();
-    	} catch (Exception exc) {
-    		System.err.println("Execution exception. Aborting.");
-    		exc.printStackTrace();
-    		System.exit(1);
-    	}
-    }
+	public static void main(String[] args) {
+		try {
+			GetCurrTabInfo tool = new GetCurrTabInfo();
+			tool.kernel();
+		} catch (Exception exc) {
+			System.err.println("Execution exception. Aborting.");
+			exc.printStackTrace();
+			System.exit(1);
+		}
+	}
 
-    protected void kernel() throws Exception {
-    	KMyMoneyFileImpl kmmFile = new KMyMoneyFileImpl(new File(kmmFileName));
+	protected void kernel() throws Exception {
+		KMyMoneyFileImpl kmmFile = new KMyMoneyFileImpl(new File(kmmFileName));
 
-    	ComplexPriceTable tab = kmmFile.getCurrencyTable();
-    	System.out.println(tab.toString());
-    }
+		ComplexPriceTable tab = kmmFile.getCurrencyTable();
+		System.out.println(tab.toString());
+	}
 }
