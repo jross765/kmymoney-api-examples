@@ -2,18 +2,23 @@
 
 ## What Does It Do?
 Guess what: This module contains example pograms (no, really?!).
-They demonstrate how to use the API (all levels: Core, Specialized Entities, Extensions).
+They demonstrate how to use the API (all levels: Core, Specialized Entities, Extensions, and mixed).
 
 ## What the Programs are
 Theses programs are simple *example* programs demonstrating the correct / suggested use of the 
 KMyMoney 
 API library, partially replacing a user documentation that does not exist in the current version.
 
+The author tries to find a good balance between trivial read-only examples (that actually are 
+of no use) and complicated read-write examples (that may reflect all the world's actual complexity,
+but take too long to grasp when you are new to the show). Surprisingly often, he has found only 
+one single trivial example in other projects.
+
 ## What the Programs are Not
 * They are *not* general-purpose tools. 
 
-  Yes, you will partially find "siblings" of these programs in the module "Tools", and these tools have 
-  partially evolved from these examples.
+  Yes, you will partially find "siblings" of these programs in the module "Tools", and these 
+  tools have partially evolved from these examples and vice versa.
 
   However, you will also see that it takes a lot more to make a general-purpose tool of such a 
   program -- not only technical work like parsing the input data from the command line and 
@@ -49,8 +54,9 @@ Instead, the references are only used to clarify the meaning of the parameter / 
 if appropriate. ]
 
 Each of the example programs compiles as it is (the author always gets mad when he sees 
-example code in other projects that does not even compile, let alone work). And they are 
-not just code snippets, but complete, self-contained programs that you can actually run.
+example code from stone-age in other projects that does not even compile, let alone work). 
+And they are not just code snippets, but complete, self-contained programs that you can 
+actually run.
 
 Thus, the suggested workflow is:
 
